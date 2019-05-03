@@ -19,9 +19,11 @@ namespace Afleveringsopgave3
         public Form1()
         {
             InitializeComponent();
+            UpdateTextPosition();
             Reset();
         }
-
+        //Method for handling when the cancel button is pushed by calling the Reset() function
+        //also called on form load
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Reset();
@@ -63,16 +65,9 @@ namespace Afleveringsopgave3
             pepperoniKalorierPrSkiveAlmTextBox.Text = $"{(double)Pepperoni.KalorierAlm / (double)pepperoniAntalSkiver} kcal";
             pepperoniKalorierPrSkiveFamTextBox.Text = $"{(double)Pepperoni.KalorierFam / (double)pepperoniAntalSkiver} kcal";
 
-            int rejerAntalAlm = Convert.ToInt32(rejerAlmTextBox.Text);
-            int rejerAntalFam = Convert.ToInt32(rejerFamTextBox.Text);
-            int pepperoniAntalAlm = Convert.ToInt32(pepperoniAlmTextBox.Text);
-            int pepperoniAntalFam = Convert.ToInt32(pepperoniFamTextBox.Text);
-            int rejerLoegAlm = loegCheckBox.Checked ? rejerAntalAlm : 0;
-            int rejerRejerAlm = rejerCheckBox.Checked ? rejerAntalAlm : 0;
-            int rejerTun = tunCheckBox.Checked ? rejerAntalAlm : 0;
-
-            int rejerSubtotalAlm = rejerMedTunPizza.GetPriceAlm(rejerAntalAlm, rejerLoegAlm, rejerRejerAlm, rejerTun);
-            subTotalRejer.Text = rejerSubtotalAlm.ToString("C");
+            CalculateRejerPizza();
+            CalculatePepperoniPizza();
+            CalculateTotal();
         }
 
         //Event handler when the order button ("bestil") is pushed
@@ -83,6 +78,8 @@ namespace Afleveringsopgave3
             DateTime time = DateTime.Now;
             DateTime time_4 = time.AddMinutes(4);
             forventetFaerdigTextBox.Text = time_4.ToString("HH:mm:ss");
+            KvitteringMessage();
+            Reset();
         }
 
         //Method for re-setting fields on load and when "cancel" button is pressed
@@ -116,6 +113,90 @@ namespace Afleveringsopgave3
             subTotalRejer.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", value);
             subTotalPep.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", value);
             totalTextBox.Text = String.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", value);
+        }
+
+        //Method to calculate subtotal of "rejer med tun" pizza
+        public void CalculateRejerPizza()
+        {
+            int rejerAntalAlm = Convert.ToInt32(rejerAlmTextBox.Text);
+            int rejerAntalFam = Convert.ToInt32(rejerFamTextBox.Text);
+            int rejerLoegAlm = loegCheckBox.Checked ? rejerAntalAlm : 0;
+            int rejerRejerAlm = rejerCheckBox.Checked ? rejerAntalAlm : 0;
+            int rejerTunAlm = tunCheckBox.Checked ? rejerAntalAlm : 0;
+            int rejerLoegFam = loegCheckBox.Checked ? rejerAntalFam : 0;
+            int rejerRejerFam = rejerCheckBox.Checked ? rejerAntalFam : 0;
+            int rejerTunFam = tunCheckBox.Checked ? rejerAntalFam : 0;
+            int rejerSubtotalAlm = rejerMedTunPizza.GetPriceAlm(rejerAntalAlm, rejerLoegAlm, rejerRejerAlm, rejerTunAlm);
+            double rejerSubtotalFam = rejerMedTunPizza.GetPriceFam(rejerAntalFam, rejerLoegFam, rejerRejerFam, rejerTunFam);
+            double rejerSubtotalSamlet = rejerSubtotalAlm + rejerSubtotalFam;
+            subTotalRejer.Text = rejerSubtotalSamlet.ToString("C");
+        }
+
+        //Method to calculate subtotal of pepperoni pizza
+        public void CalculatePepperoniPizza()
+        {
+            int pepperoniAntalAlm = Convert.ToInt32(pepperoniAlmTextBox.Text);
+            int pepperoniAntalFam = Convert.ToInt32(pepperoniFamTextBox.Text);
+            int pepperoniPepAlm = pepperoniCheckBox.Checked ? pepperoniAntalAlm : 0;
+            int pepperoniChamAlm = ChampignonCheckBox.Checked ? pepperoniAntalAlm : 0;
+            int pepperoniOstAlm = ostCheckBox.Checked ? pepperoniAntalAlm : 0;
+            int pepperoniPepFam = pepperoniCheckBox.Checked ? pepperoniAntalFam : 0;
+            int pepperoniChamFam = ChampignonCheckBox.Checked ? pepperoniAntalFam : 0;
+            int pepperoniOstFam = ostCheckBox.Checked ? pepperoniAntalFam : 0;
+            int pepperoniSubtotalAlm = pepperoniPizza.GetPriceAlm(pepperoniAntalAlm, pepperoniPepAlm, pepperoniChamAlm, pepperoniOstAlm);
+            double pepperoniSubtotalFam = pepperoniPizza.GetPriceFam(pepperoniAntalFam, pepperoniPepFam, pepperoniChamFam, pepperoniOstFam);
+            double pepperoniSubtotalSamlet = pepperoniSubtotalAlm + pepperoniSubtotalFam;
+            subTotalPep.Text = pepperoniSubtotalSamlet.ToString("C");
+        }
+        //Method to calculate the total value of the order
+        public void CalculateTotal()
+        {
+            double temp = double.Parse(subTotalRejer.Text, System.Globalization.NumberStyles.Currency);
+            double temp2 = double.Parse(subTotalPep.Text, System.Globalization.NumberStyles.Currency);
+            totalTextBox.Text = (temp + temp2).ToString("C");
+        }
+        //Method that writes a reciept to a message box
+        public void KvitteringMessage()
+        {
+            string ekstraLoeg = loegCheckBox.Checked ? $"+ ekstra {loegCheckBox.Text}" : "";
+            string ekstraRejer = rejerCheckBox.Checked ? $"+ ekstra {rejerCheckBox.Text}" : "";
+            string ekstraTun = tunCheckBox.Checked ? $"+ ekstra {tunCheckBox.Text}" : "";
+            string ekstraPepperoni = pepperoniCheckBox.Checked ? $"+ ekstra {pepperoniCheckBox.Text}" : "";
+            string ekstraCham = ChampignonCheckBox.Checked ? $"+ ekstra {ChampignonCheckBox.Text}" : "";
+            string ekstraOst = ostCheckBox.Checked ? $"+ ekstra {ostCheckBox.Text}" : "";
+            string rejAlm = rejerAlmTextBox.Enabled ? $"{rejerAlmTextBox.Text} alm pizza med rejer og tun" +
+                $" {ekstraLoeg} {ekstraRejer} {ekstraTun}" : "";
+            string rejFam = rejerFamTextBox.Enabled ? $"{rejerFamTextBox.Text} familie pizza med rejer og tun" +
+                $"{ekstraLoeg} {ekstraRejer} {ekstraTun}" : "";
+            string pepAlm = pepperoniAlmTextBox.Enabled ? $"{pepperoniAlmTextBox.Text} alm pizza med pepperoni" +
+                $"{ekstraPepperoni} {ekstraCham} {ekstraOst}" : "";
+            string pepFam = pepperoniFamTextBox.Enabled ? $"{pepperoniFamTextBox.Text} familie pizza med pepperoni" +
+                $"{ekstraPepperoni} {ekstraCham} {ekstraOst}" : "";
+            string message = $"\n{rejAlm}" +
+                $"\n{rejFam}" +
+                $"\n{pepAlm}" +
+                $"\n{pepFam}" +
+                $"\n\nTotal: {totalTextBox.Text}";
+            string title = "Kvittering";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            MessageBox.Show(message, title, buttons);
+        }
+        //Code to align the title name center of the form
+        private void UpdateTextPosition()
+        {
+            Graphics g = this.CreateGraphics();
+            Double startingPoint = (this.Width / 2) - (g.MeasureString(this.Text.Trim(), this.Font).Width / 2);
+            Double widthOfASpace = g.MeasureString(" ", this.Font).Width;
+            String tmp = " ";
+            Double tmpWidth = 0;
+
+            while ((tmpWidth + widthOfASpace) < startingPoint)
+            {
+                tmp += " ";
+                tmpWidth += widthOfASpace;
+            }
+
+            this.Text = tmp + this.Text.Trim();
         }
     }
 }

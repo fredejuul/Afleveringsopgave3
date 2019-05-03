@@ -87,6 +87,8 @@
             this.rejerKalorierPrSkiveFamTextBox = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.pepperoniKalorierPrSkiveFamTextBox = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -211,12 +213,11 @@
             this.loegCheckBox.TabIndex = 11;
             this.loegCheckBox.Text = "Løg";
             this.loegCheckBox.UseVisualStyleBackColor = true;
-            //this.loegCheckBox.CheckedChanged += new System.EventHandler(this.loegCheckBox_CheckedChanged);
             // 
             // rejerCheckBox
             // 
             this.rejerCheckBox.AutoSize = true;
-            this.rejerCheckBox.Location = new System.Drawing.Point(330, 80);
+            this.rejerCheckBox.Location = new System.Drawing.Point(330, 76);
             this.rejerCheckBox.Name = "rejerCheckBox";
             this.rejerCheckBox.Size = new System.Drawing.Size(51, 17);
             this.rejerCheckBox.TabIndex = 12;
@@ -226,7 +227,7 @@
             // tunCheckBox
             // 
             this.tunCheckBox.AutoSize = true;
-            this.tunCheckBox.Location = new System.Drawing.Point(330, 108);
+            this.tunCheckBox.Location = new System.Drawing.Point(330, 99);
             this.tunCheckBox.Name = "tunCheckBox";
             this.tunCheckBox.Size = new System.Drawing.Size(45, 17);
             this.tunCheckBox.TabIndex = 13;
@@ -352,7 +353,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(434, 81);
+            this.label8.Location = new System.Drawing.Point(434, 77);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 13);
             this.label8.TabIndex = 26;
@@ -361,7 +362,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(440, 109);
+            this.label9.Location = new System.Drawing.Point(440, 100);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(28, 13);
             this.label9.TabIndex = 27;
@@ -662,11 +663,31 @@
             this.pepperoniKalorierPrSkiveFamTextBox.Size = new System.Drawing.Size(56, 13);
             this.pepperoniKalorierPrSkiveFamTextBox.TabIndex = 58;
             // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(39, 112);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(231, 13);
+            this.label26.TabIndex = 59;
+            this.label26.Text = "Ved køb af Familie pizza ganges prisen med 1,5";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(39, 269);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(231, 13);
+            this.label27.TabIndex = 60;
+            this.label27.Text = "Ved køb af Familie pizza ganges prisen med 1,5";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(856, 483);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.label26);
             this.Controls.Add(this.pepperoniKalorierPrSkiveFamTextBox);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.rejerKalorierPrSkiveFamTextBox);
@@ -800,6 +821,8 @@
         private System.Windows.Forms.TextBox rejerKalorierPrSkiveFamTextBox;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox pepperoniKalorierPrSkiveFamTextBox;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
     }
 }
 

@@ -23,8 +23,17 @@ namespace Afleveringsopgave3
             int subLoeg = ekstraLoeg * loeg;
             int subRejer = ekstraRejer * rejer;
             int subTun = ekstraTun * tun;
-            int rejerMedTunSubtotal = subtotalAlm + subLoeg + subRejer + subTun;
-            return rejerMedTunSubtotal;
+            int rejerMedTunAlmSubtotal = subtotalAlm + subLoeg + subRejer + subTun;
+            return rejerMedTunAlmSubtotal;
+        }
+        public double GetPriceFam(int fam, int loeg, int rejer, int tun)
+        {
+            double subtotalFam = prisFam * fam;
+            double subLoeg = ekstraLoeg * loeg * almTilFam;
+            double subRejer = ekstraRejer * rejer * almTilFam;
+            double subTun = ekstraTun * tun * almTilFam;
+            double rejerMedTunFamSubtotal = subtotalFam + subLoeg + subRejer + subTun;
+            return rejerMedTunFamSubtotal;
         }
     }
 
@@ -37,6 +46,25 @@ namespace Afleveringsopgave3
         public const int KalorierAlm = 253;
         public const double KalorierFam = KalorierAlm * almTilFam;
         public const double pepperoniFamPris = pepperoniAlmPris * almTilFam;
+
+        public int GetPriceAlm(int alm, int pep, int cham, int ost)
+        {
+            int subtotalAlm = pepperoniAlmPris * alm;
+            int subPep = ekstraPepperoni * pep;
+            int subCham = ekstraChampignon * cham;
+            int subOst = ekstraOst * ost;
+            int pepperoniAlmSubtotal = subtotalAlm + subPep + subCham + subOst;
+            return pepperoniAlmSubtotal;
+        }
+        public double GetPriceFam(int fam, int pep, int cham, int ost)
+        {
+            double subtotalFam = pepperoniFamPris * fam;
+            double subPep = ekstraPepperoni * pep * almTilFam;
+            double subCham = ekstraChampignon * cham * almTilFam;
+            double subOst = ekstraOst * ost * almTilFam;
+            double pepperoniFamSubtotal = subtotalFam + subPep + subCham + subOst;
+            return pepperoniFamSubtotal;
+        }
     }
 
     public static class Constants
