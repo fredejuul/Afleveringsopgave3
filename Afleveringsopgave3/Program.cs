@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Afleveringsopgave3
 {
-    static class Program
+    public class Program
     {
         /// <summary>
         /// The main entry point for the application.
