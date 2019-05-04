@@ -23,7 +23,7 @@ namespace Afleveringsopgave3
             Reset();
         }
         //Method for handling when the cancel button is pushed by calling the Reset() function
-        //also called on form load
+        //which is also called on form load
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             Reset();
@@ -55,6 +55,7 @@ namespace Afleveringsopgave3
             pepperoniKalorierPrSkiveFamTextBox.Visible = pepperoniFamCheckbox.Checked ? true : false;
         }
 
+        //Event handler when the calculate button ("beregn") is pushed
         private void buttonBeregn_Click(object sender, EventArgs e)
         {
             int rejerAntalSkiver = Convert.ToInt32(rejerSlicesTextBox.Text);
@@ -118,18 +119,25 @@ namespace Afleveringsopgave3
         //Method to calculate subtotal of "rejer med tun" pizza
         public void CalculateRejerPizza()
         {
-            int rejerAntalAlm = Convert.ToInt32(rejerAlmTextBox.Text);
-            int rejerAntalFam = Convert.ToInt32(rejerFamTextBox.Text);
-            int rejerLoegAlm = loegCheckBox.Checked ? rejerAntalAlm : 0;
-            int rejerRejerAlm = rejerCheckBox.Checked ? rejerAntalAlm : 0;
-            int rejerTunAlm = tunCheckBox.Checked ? rejerAntalAlm : 0;
-            int rejerLoegFam = loegCheckBox.Checked ? rejerAntalFam : 0;
-            int rejerRejerFam = rejerCheckBox.Checked ? rejerAntalFam : 0;
-            int rejerTunFam = tunCheckBox.Checked ? rejerAntalFam : 0;
-            int rejerSubtotalAlm = rejerMedTunPizza.GetPriceAlm(rejerAntalAlm, rejerLoegAlm, rejerRejerAlm, rejerTunAlm);
-            double rejerSubtotalFam = rejerMedTunPizza.GetPriceFam(rejerAntalFam, rejerLoegFam, rejerRejerFam, rejerTunFam);
-            double rejerSubtotalSamlet = rejerSubtotalAlm + rejerSubtotalFam;
-            subTotalRejer.Text = rejerSubtotalSamlet.ToString("C");
+            try
+            {
+                int rejerAntalAlm = Convert.ToInt32(rejerAlmTextBox.Text);
+                int rejerAntalFam = Convert.ToInt32(rejerFamTextBox.Text);
+                int rejerLoegAlm = loegCheckBox.Checked ? rejerAntalAlm : 0;
+                int rejerRejerAlm = rejerCheckBox.Checked ? rejerAntalAlm : 0;
+                int rejerTunAlm = tunCheckBox.Checked ? rejerAntalAlm : 0;
+                int rejerLoegFam = loegCheckBox.Checked ? rejerAntalFam : 0;
+                int rejerRejerFam = rejerCheckBox.Checked ? rejerAntalFam : 0;
+                int rejerTunFam = tunCheckBox.Checked ? rejerAntalFam : 0;
+                int rejerSubtotalAlm = rejerMedTunPizza.GetPriceAlm(rejerAntalAlm, rejerLoegAlm, rejerRejerAlm, rejerTunAlm);
+                double rejerSubtotalFam = rejerMedTunPizza.GetPriceFam(rejerAntalFam, rejerLoegFam, rejerRejerFam, rejerTunFam);
+                double rejerSubtotalSamlet = rejerSubtotalAlm + rejerSubtotalFam;
+                subTotalRejer.Text = rejerSubtotalSamlet.ToString("C");
+            }
+            catch (FormatException ex) //when (ex is ArgumentNullException || ex is DivideByZeroException)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         //Method to calculate subtotal of pepperoni pizza
